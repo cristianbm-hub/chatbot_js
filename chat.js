@@ -87,7 +87,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            z-index: 1000;
+            z-index: 99999;
             width: 380px;
             height: 600px;
             background: var(--chat--color-background);
@@ -388,7 +388,7 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(133, 79, 255, 0.3);
-            z-index: 999;
+            z-index: 99998;
             transition: transform 0.3s;
             display: flex;
             align-items: center;
@@ -532,7 +532,7 @@
             flex-direction: column;
             width: 100%;
             max-height: 300px;
-            z-index: 1001;
+            z-index: 100000;
             transform-origin: bottom center;
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             transform: translateY(20px) scale(0.95);
@@ -713,7 +713,7 @@
             border-radius: 50%;
             width: 32px;
             height: 32px;
-            z-index: 1001;
+            z-index: 100000;
         }
 
         .n8n-chat-widget .theme-toggle:hover {
