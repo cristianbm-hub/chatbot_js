@@ -718,46 +718,7 @@
         }
 
         .n8n-chat-widget .resize-button {
-            position: absolute;
-            right: 90px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--chat--color-font);
-            cursor: nwse-resize;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            font-size: 20px;
-            opacity: 0.8;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            z-index: 1001;
-        }
-
-        .n8n-chat-widget .resize-button:hover {
-            opacity: 1;
-            background: rgba(133, 79, 255, 0.1);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .n8n-chat-widget .resize-button svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        .n8n-chat-widget.dark-mode .resize-button {
-            color: ${config.style.darkMode?.fontColor||"#ffffff"};
-        }
-
-        @media (max-width: 768px) {
-            .n8n-chat-widget .resize-button {
-                display: none;
-            }
+            display: none;
         }
 
         .n8n-chat-widget.dark-mode .chat-input textarea::-webkit-scrollbar {
@@ -849,11 +810,6 @@
                         <path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
                     </svg>
                 </button>
-                <button class="resize-button" title="Redimensionar">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14z"/>
-                    </svg>
-                </button>
                 <button class="close-button">&times;</button>
             </div>
             <div class="new-conversation">
@@ -872,11 +828,6 @@
                     </svg>
                     <svg class="theme-icon dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
-                    </svg>
-                </button>
-                <button class="resize-button" title="Redimensionar">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14z"/>
                     </svg>
                 </button>
                 <button class="close-button">&times;</button>
@@ -947,7 +898,7 @@
             messagesContainer.appendChild(messageDiv);
         });
         messagesContainer.scrollTop=messagesContainer.scrollHeight;
-    }sendButton.addEventListener("click",()=>{const message=textarea.value.trim();if(message){sendMessage(message);textarea.value=""}});textarea.addEventListener("keypress",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();const message=textarea.value.trim();if(message){sendMessage(message);textarea.value=""}}});textarea.addEventListener("input",()=>{if(textarea.value.trim()){sendButton.style.display="block";emojiButton.style.display="flex"}else{sendButton.style.display="none";emojiButton.style.display="none"}});const emojisByCategory={frequent:["😀","😊","👍","❤️","👋","🙏","😂","🎉","👏","🤔","😍"],smileys:["😀","😃","😄","😁","😆","😅","😂","🤣","😊","😇","🙂","🙃","😉","😌","😍","🥰","😘","😗","😙","😚","😋","😛","😝","😜","🤪","🤨","🧐","🤓","😎","🤩","🥳"],people:["👍","👎","👌","✌️","🤞","🤟","🤘","🤙","👈","👉","👆","👇","☝️","👋","🤚","🖐️","✋","🖖","👏","🙌","👐","🤲","🤝","🙏","✍️"],animals:["🐱","🐶","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯","🦁","🐮","🐷","🐸","🐵","🐔","🐧","🐦","🐤","🦆","🦅","🦉","🦇","🐺","🐗"],food:["🍎","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅","🍆","🥑","🥦","🥬","🥒","🌶️","🌽","🥕","🧄","🧅","🥔","🍠","🥐","🥯","🍞","🥖","🥨","🧀","🥚","🍳","🧈","🥞","🧇","🥓","🥩","🍗","🍖","🦴","🌭","🍔","🍟","🍕","🥪","🥙","🧆","🌮","🌯","🥗","🥘","🥫","🍝","🍜","🍲","🍛","🍣","🍱","🥟","🦪","🍤","🍙","🍚","🍘","🍥","🥠","🥮","🍢","🍡","🍧","🍨","🍦","🥧","🧁","🍰","🎂","🍮","🍭","🍬","🍫","🍿","🍩","🍪","🌰","🥜","🍯","🥛","🍼","☕","🍵","🧃","🥤","🍶","🍺","🍻","🥂","🍷","🥃","🍸","🍹","🧉","🍾","🧊"],travel:["✈️","🚀","🚁","🚂","🚃","🚄","🚅","🚆","🚇","🚈","🚉","🚊","🚝","🚞","🚋","🚌","🚍","🚎","🚐","🚑","🚒","🚓","🚔","🚕","🚖","🚗","🚘","🚙","🚚","🚛","🚜","🏎️","🏍️","🛵","🦽","🦼","🛺","🚲","🛴","🛹","🚏","🛣️","🛤️","🛢️","⛽","🚨","🚥","🚦","🛑","🚧"],activities:["⚽","🏀","🏈","⚾","🥎","🎾","🏐","🏉","🥏","🎱","🪀","🏓","🏸","🏒","🏑","🥍","🏏","🥅","⛳","🪁","🎣","🤿","🎽","🎿","🛷","🥌","🎯","🪂","🎮","🕹️","🎲","🎭","🎨","🧩"],objects:["💡","🔦","🕯️","🧯","🛒","🚬","⚰️","⚱️","🏺","🔮","📿","🧿","💈","⚗️","🔭","🔬","🕳️","💊","💉","🩸","🩹","🩺","🔪","🗡️","⚔️","🛡️","🚪","🪑","🛏️","🛋️","🪒","🧴","🧷","🧹","🧺","🧻","🧼","🧽","🧯","🛒"],symbols:["❤️","🧡","💛","💚","💙","💜","🖤","🤍","🤎","💔","❣️","💕","💞","💓","💗","💖","💘","💝","💟","☮️","✝️","☪️","🕉️","☸️","✡️","🔯","🕎","☯️","☦️","🛐","⛎","♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓","🆔","⚛️"],flags:["🏁","🚩","🎌","🏴","🏳️","🏳️‍🌈","🏴‍☠️"]};function loadEmojisForCategory(category){emojiContent.innerHTML="";const emojis=emojisByCategory[category];emojis.forEach(emoji=>{const emojiElement=document.createElement("div");emojiElement.className="emoji-item";emojiElement.textContent=emoji;emojiElement.addEventListener("click",()=>{insertEmoji(emoji)});emojiContent.appendChild(emojiElement)})}function insertEmoji(emoji){const cursorPos=textarea.selectionStart;const textBefore=textarea.value.substring(0,cursorPos);const textAfter=textarea.value.substring(cursorPos);textarea.value=textBefore+emoji+textAfter;textarea.selectionStart=cursorPos+emoji.length;textarea.selectionEnd=cursorPos+emoji.length;textarea.focus();sendButton.style.display="block";emojiPanel.classList.remove("active")}loadEmojisForCategory("frequent");emojiCategories.forEach(category=>{category.addEventListener("click",()=>{emojiCategories.forEach(cat=>cat.classList.remove("active"));category.classList.add("active");loadEmojisForCategory(category.dataset.category)})});emojiButton.addEventListener("click",()=>{emojiPanel.classList.toggle("active");if(emojiPanel.classList.contains("active")){loadEmojisForCategory("frequent")}});document.addEventListener("click",event=>{if(!emojiPanel.contains(event.target)&&!emojiButton.contains(event.target)){emojiPanel.classList.remove("active")}});function initializeResize(){const resizeButtons=document.querySelectorAll(".resize-button");const chatContainer=document.querySelector(".chat-container");if(!resizeButtons.length||!chatContainer)return;const normalSize={width:"100%",height:"100vh"};const mediumSize={width:"600px",height:"800px"};let isFullScreen=true;function toggleSize(){if(window.innerWidth<=768){return}if(isFullScreen){chatContainer.style.width=mediumSize.width;chatContainer.style.height=mediumSize.height;chatContainer.style.position="fixed";chatContainer.style.top="50%";chatContainer.style.left="50%";chatContainer.style.transform="translate(-50%, -50%)";chatContainer.style.borderRadius="12px";chatContainer.style.boxShadow="0 8px 32px rgba(133, 79, 255, 0.15)"}else{chatContainer.style.width=normalSize.width;chatContainer.style.height=normalSize.height;chatContainer.style.position="fixed";chatContainer.style.top="0";chatContainer.style.left="0";chatContainer.style.transform="none";chatContainer.style.borderRadius="0";chatContainer.style.boxShadow="none"}isFullScreen=!isFullScreen}window.addEventListener("resize",()=>{if(window.innerWidth<=768){chatContainer.style.width="100%";chatContainer.style.height="100vh";chatContainer.style.position="fixed";chatContainer.style.top="0";chatContainer.style.left="0";chatContainer.style.transform="none";chatContainer.style.borderRadius="0";isFullScreen=true}});resizeButtons.forEach(button=>{button.addEventListener("click",toggleSize)})}initializeResize();const chatButton=chatContainer.querySelector(".chat-button");if(chatButton){chatButton.addEventListener("click",()=>{setTimeout(initializeResize,100)})}async function sendMessage(message){const messagesContainer=chatContainer.querySelector(".chat-messages");const messageData={message:message,chatInput:message,sessionId:currentSessionId,timestamp:(new Date).toISOString()};const userMessageDiv=document.createElement("div");userMessageDiv.className="chat-message user";userMessageDiv.innerHTML=`
+    }sendButton.addEventListener("click",()=>{const message=textarea.value.trim();if(message){sendMessage(message);textarea.value=""}});textarea.addEventListener("keypress",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();const message=textarea.value.trim();if(message){sendMessage(message);textarea.value=""}}});textarea.addEventListener("input",()=>{if(textarea.value.trim()){sendButton.style.display="block";emojiButton.style.display="flex"}else{sendButton.style.display="none";emojiButton.style.display="none"}});const emojisByCategory={frequent:["😀","😊","👍","❤️","👋","🙏","😂","🎉","👏","🤔","😍"],smileys:["😀","😃","😄","😁","😆","😅","😂","🤣","😊","😇","🙂","🙃","😉","😌","😍","🥰","😘","😗","😙","😚","😋","😛","😝","😜","🤪","🤨","🧐","🤓","😎","🤩","🥳"],people:["👍","👎","👌","✌️","🤞","🤟","🤘","🤙","👈","👉","👆","👇","☝️","👋","🤚","🖐️","✋","🖖","👏","🙌","👐","🤲","🤝","🙏","✍️"],animals:["🐱","🐶","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯","🦁","🐮","🐷","🐸","🐵","🐔","🐧","🐦","🐤","🦆","🦅","🦉","🦇","🐺","🐗"],food:["🍎","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅","🍆","🥑","🥦","🥬","🥒","🌶️","🌽","🥕","🧄","🧅","🥔","🍠","🥐","🥯","🍞","🥖","🥨","🧀","🥚","🍳","🧈","🥞","🧇","🥓","🥩","🍗","🍖","🦴","🌭","🍔","🍟","🍕","🥪","🥙","🧆","🌮","🌯","🥗","🥘","🥫","🍝","🍜","🍲","🍛","🍣","🍱","🥟","🦪","🍤","🍙","🍚","🍘","🍥","🥠","🥮","🍢","🍡","🍧","🍨","🍦","🥧","🧁","🍰","🎂","🍮","🍭","🍬","🍫","🍿","🍩","🍪","🌰","🥜","🍯","🥛","🍼","☕","🍵","🧃","🥤","🍶","🍺","🍻","🥂","🍷","🥃","🍸","🍹","🧉","🍾","🧊"],travel:["✈️","🚀","🚁","🚂","🚃","🚄","🚅","🚆","🚇","🚈","🚉","🚊","🚝","🚞","🚋","🚌","🚍","🚎","🚐","🚑","🚒","🚓","🚔","🚕","🚖","🚗","🚘","🚙","🚚","🚛","🚜","🏎️","🏍️","🛵","🦽","🦼","🛺","🚲","🛴","🛹","🚏","🛣️","🛤️","🛢️","⛽","🚨","🚥","🚦","🛑","🚧"],activities:["⚽","🏀","🏈","⚾","🥎","🎾","🏐","🏉","🥏","🎱","🪀","🏓","🏸","🏒","🏑","🥍","🏏","🥅","⛳","🪁","🎣","🤿","🎽","🎿","🛷","🥌","🎯","🪂","🎮","🕹️","🎲","🎭","🎨","🧩"],objects:["💡","🔦","🕯️","🧯","🛒","🚬","⚰️","⚱️","🏺","🔮","📿","🧿","💈","⚗️","🔭","🔬","🕳️","💊","💉","🩸","🩹","🩺","🔪","🗡️","⚔️","🛡️","🚪","🪑","🛏️","🛋️","🪒","🧴","🧷","🧹","🧺","🧻","🧼","🧽","🧯","🛒"],symbols:["❤️","🧡","💛","💚","💙","💜","🖤","🤍","🤎","💔","❣️","💕","💞","💓","💗","💖","💘","💝","💟","☮️","✝️","☪️","🕉️","☸️","✡️","🔯","🕎","☯️","☦️","🛐","⛎","♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓","🆔","⚛️"],flags:["🏁","🚩","🎌","🏴","🏳️","🏳️‍🌈","🏴‍☠️"]};function loadEmojisForCategory(category){emojiContent.innerHTML="";const emojis=emojisByCategory[category];emojis.forEach(emoji=>{const emojiElement=document.createElement("div");emojiElement.className="emoji-item";emojiElement.textContent=emoji;emojiElement.addEventListener("click",()=>{insertEmoji(emoji)});emojiContent.appendChild(emojiElement)})}function insertEmoji(emoji){const cursorPos=textarea.selectionStart;const textBefore=textarea.value.substring(0,cursorPos);const textAfter=textarea.value.substring(cursorPos);textarea.value=textBefore+emoji+textAfter;textarea.selectionStart=cursorPos+emoji.length;textarea.selectionEnd=cursorPos+emoji.length;textarea.focus();sendButton.style.display="block";emojiPanel.classList.remove("active")}loadEmojisForCategory("frequent");emojiCategories.forEach(category=>{category.addEventListener("click",()=>{emojiCategories.forEach(cat=>cat.classList.remove("active"));category.classList.add("active");loadEmojisForCategory(category.dataset.category)})});emojiButton.addEventListener("click",()=>{emojiPanel.classList.toggle("active");if(emojiPanel.classList.contains("active")){loadEmojisForCategory("frequent")}});document.addEventListener("click",event=>{if(!emojiPanel.contains(event.target)&&!emojiButton.contains(event.target)){emojiPanel.classList.remove("active")}});async function sendMessage(message){const messagesContainer=chatContainer.querySelector(".chat-messages");const messageData={message:message,chatInput:message,sessionId:currentSessionId,timestamp:(new Date).toISOString()};const userMessageDiv=document.createElement("div");userMessageDiv.className="chat-message user";userMessageDiv.innerHTML=`
             <span>${message}</span>
             <div style="font-size: 12px; color: rgba(255, 255, 255, 0.8); text-align: right; margin-top: 4px;">
                 <span>${(new Date).toLocaleDateString([],{year:"2-digit",month:"2-digit",day:"2-digit"})} · ${(new Date).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}</span>
@@ -995,7 +946,7 @@
                     <svg class="theme-icon dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
                     </svg>
-                `;toggle.addEventListener("click",()=>{const isDark=chatWidget.classList.contains("dark-mode");updateDarkMode(!isDark)})});const savedTheme=localStorage.getItem("chatTheme");if(savedTheme){updateDarkMode(savedTheme==="dark")}else{updateDarkMode(false)}}}initializeDarkMode();if(config.contact.chat.enabled){const chatButton=chatContainer.querySelector(".chat-button");if(chatButton){chatButton.addEventListener("click",()=>startNewConversation(false));chatButton.addEventListener("click",()=>{setTimeout(initializeResize,100)})}}initializeResize();const linkCardStyleElement=document.createElement("style");linkCardStyleElement.textContent=`
+                `;toggle.addEventListener("click",()=>{const isDark=chatWidget.classList.contains("dark-mode");updateDarkMode(!isDark)})});const savedTheme=localStorage.getItem("chatTheme");if(savedTheme){updateDarkMode(savedTheme==="dark")}else{updateDarkMode(false)}}}initializeDarkMode();if(config.contact.chat.enabled){const chatButton=chatContainer.querySelector(".chat-button");if(chatButton){chatButton.addEventListener("click",()=>startNewConversation(false))}}const linkCardStyleElement=document.createElement("style");linkCardStyleElement.textContent=`
     /* Estilos para las tarjetas de enlace estilo GitHub */
     .link-card {
         display: flex;

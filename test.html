@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Chat Widget</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Configuración del chat -->
+    <script>
+        window.ChatConfig = {
+            branding: {
+                logo: "https://via.placeholder.com/32",
+                name: "Chat de Prueba",
+                welcomeText: "¡Bienvenido!",
+                responseTimeText: "Normalmente respondemos en minutos",
+                poweredBy: {
+                    text: "Powered by Test",
+                    link: "#"
+                }
+            },
+            style: {
+                primaryColor: "#854FFF",
+                secondaryColor: "#6B3FCC",
+                position: "right",
+                backgroundColor: "#ffffff",
+                fontColor: "#333333",
+                animation: "fadeInScale",
+                animationDuration: "0.5s",
+                animationDelay: "0s",
+                iconSize: "60px",
+                darkMode: {
+                    enabled: true,
+                    primaryColor: "#a67fff",
+                    secondaryColor: "#8b5fe6",
+                    backgroundColor: "#1a1a1a",
+                    fontColor: "#ffffff"
+                }
+            },
+            contact: {
+                chat: {
+                    enabled: true,
+                    webhook: {
+                        url: "https://webhook.site/unique-id", // Cambia esto por tu webhook real
+                        route: "/chat"
+                    }
+                },
+                whatsapp: {
+                    enabled: true,
+                    number: "34123456789"
+                },
+                email: {
+                    enabled: true,
+                    address: "test@example.com"
+                },
+                phone: {
+                    enabled: true,
+                    number: "34123456789"
+                }
+            }
+        };
+    </script>
+    
+    <!-- Cargar el widget de chat -->
+    <script src="chat.js"></script>
+</body>
+</html>
+
