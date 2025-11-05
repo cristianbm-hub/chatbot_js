@@ -880,15 +880,20 @@
     `;chatContainer.innerHTML=newConversationHTML+chatInterfaceHTML;const toggleButton=document.createElement("button");toggleButton.className=`chat-toggle${config.style.position==="left"?" position-left":""}`;toggleButton.innerHTML=`
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.5-.838A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.476 0-2.886-.313-4.156-.878l-3.156.586.586-3.156A7.962 7.962 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
-        </svg>`;widgetContainer.appendChild(chatContainer);widgetContainer.appendChild(toggleButton);document.body.appendChild(widgetContainer);const chatInterface=chatContainer.querySelector(".chat-interface");const messagesContainer=chatContainer.querySelector(".chat-messages");const textarea=chatContainer.querySelector("textarea");const sendButton=chatContainer.querySelector('button[type="submit"]');const emojiButton=chatContainer.querySelector(".emoji-button");const emojiPanel=chatContainer.querySelector(".emoji-panel");const emojiCategories=chatContainer.querySelectorAll(".emoji-category");const emojiContent=chatContainer.querySelector(".emoji-content");const closeButtons=chatContainer.querySelectorAll(".close-button");    // El chat está siempre visible, no necesitamos event listeners para abrir/cerrar
+        </svg>`;widgetContainer.appendChild(chatContainer);widgetContainer.appendChild(toggleButton);document.body.appendChild(widgetContainer);const chatInterface=chatContainer.querySelector(".chat-interface");const messagesContainer=chatContainer.querySelector(".chat-messages");const textarea=chatContainer.querySelector("textarea");const sendButton=chatContainer.querySelector('button[type="submit"]');const emojiButton=chatContainer.querySelector(".emoji-button");const emojiPanel=chatContainer.querySelector(".emoji-panel");const emojiCategories=chatContainer.querySelectorAll(".emoji-category");const emojiContent=chatContainer.querySelector(".emoji-content");const closeButtons=chatContainer.querySelectorAll(".close-button");    // Ocultar la pantalla de bienvenida y mostrar el chat directamente
+    const brandHeader=chatContainer.querySelector(".brand-header");
+    const newConversation=chatContainer.querySelector(".new-conversation");
+    brandHeader.style.display="none";
+    newConversation.style.display="none";
+    chatInterface.classList.add("active");
+    
+    // Inicializar sesión
+    if(!loadChatHistory()){
+        currentSessionId=generateUUID();
+    }
     
     // Cargar historial del chat si existe
-    if(loadChatHistory()&&chatHistory.length>0){
-        const brandHeader=chatContainer.querySelector(".brand-header");
-        const newConversation=chatContainer.querySelector(".new-conversation");
-        brandHeader.style.display="none";
-        newConversation.style.display="none";
-        chatInterface.classList.add("active");
+    if(chatHistory.length>0){
         const messagesContainer=chatContainer.querySelector(".chat-messages");
         messagesContainer.innerHTML="";
         chatHistory.forEach(msg=>{
