@@ -903,6 +903,64 @@
             messagesContainer.appendChild(messageDiv);
         });
         messagesContainer.scrollTop=messagesContainer.scrollHeight;
+    } else {
+        // Si no hay historial, hacer llamada inicial al endpoint
+        const data=[{
+            action:"loadPreviousSession",
+            sessionId:currentSessionId,
+            route:config.contact.chat.webhook.route,
+            metadata:{userId:""}
+        }];
+        
+        fetch(config.contact.chat.webhook.url,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(data)
+        }).then(response=>{
+            if(!response.ok){
+                throw new Error("Error en la respuesta de la API");
+            }
+            return response.json();
+        }).then(responseData=>{
+            const botMessageDiv=document.createElement("div");
+            botMessageDiv.className="chat-message bot";
+            botMessageDiv.innerHTML=`
+                <div style="display: flex; align-items: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 16px; height: 16px; margin-right: 8px; fill: var(--chat--color-primary);">
+                        <path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.5-.838A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.476 0-2.886-.313-4.156-.878l-3.156.586.586-3.156A7.962 7.962 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+                    </svg>
+                    <strong style="margin-right: 8px; font-size: 16px; color: var(--chat--color-primary);">${TEXTOS.atencionCliente}</strong>
+                </div>
+                <span>${Array.isArray(responseData)?responseData[0].output:responseData.output}</span>
+                <div style="font-size: 12px; color: #999; text-align: right; margin-top: 4px;">
+                    <span>${new Date().toLocaleDateString([],{year:"2-digit",month:"2-digit",day:"2-digit"})} · ${new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}</span>
+                </div>
+            `;
+            messagesContainer.appendChild(botMessageDiv);
+            messagesContainer.scrollTop=messagesContainer.scrollHeight;
+            chatHistory.push({type:"bot",content:botMessageDiv.innerHTML});
+            saveChatHistory();
+        }).catch(error=>{
+            console.error("Error:",error);
+            const errorMessageDiv=document.createElement("div");
+            errorMessageDiv.className="chat-message bot";
+            errorMessageDiv.innerHTML=`
+                <div style="display: flex; align-items: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 16px; height: 16px; margin-right: 8px; fill: var(--chat--color-primary);">
+                        <path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.5-.838A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.476 0-2.886-.313-4.156-.878l-3.156.586.586-3.156A7.962 7.962 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+                    </svg>
+                    <strong style="margin-right: 8px; font-size: 16px; color: var(--chat--color-primary);">${TEXTOS.atencionCliente}</strong>
+                </div>
+                <span>${TEXTOS.noDisponible}</span>
+                <div style="font-size: 12px; color: #999; text-align: right; margin-top: 4px;">
+                    <span>${new Date().toLocaleDateString([],{year:"2-digit",month:"2-digit",day:"2-digit"})} · ${new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}</span>
+                </div>
+            `;
+            messagesContainer.appendChild(errorMessageDiv);
+            messagesContainer.scrollTop=messagesContainer.scrollHeight;
+            chatHistory.push({type:"bot",content:errorMessageDiv.innerHTML});
+            saveChatHistory();
+        });
     }sendButton.addEventListener("click",()=>{const message=textarea.value.trim();if(message){sendMessage(message);textarea.value=""}});textarea.addEventListener("keypress",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();const message=textarea.value.trim();if(message){sendMessage(message);textarea.value=""}}});textarea.addEventListener("input",()=>{if(textarea.value.trim()){sendButton.style.display="block";emojiButton.style.display="flex"}else{sendButton.style.display="none";emojiButton.style.display="none"}});const emojisByCategory={frequent:["😀","😊","👍","❤️","👋","🙏","😂","🎉","👏","🤔","😍"],smileys:["😀","😃","😄","😁","😆","😅","😂","🤣","😊","😇","🙂","🙃","😉","😌","😍","🥰","😘","😗","😙","😚","😋","😛","😝","😜","🤪","🤨","🧐","🤓","😎","🤩","🥳"],people:["👍","👎","👌","✌️","🤞","🤟","🤘","🤙","👈","👉","👆","👇","☝️","👋","🤚","🖐️","✋","🖖","👏","🙌","👐","🤲","🤝","🙏","✍️"],animals:["🐱","🐶","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯","🦁","🐮","🐷","🐸","🐵","🐔","🐧","🐦","🐤","🦆","🦅","🦉","🦇","🐺","🐗"],food:["🍎","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅","🍆","🥑","🥦","🥬","🥒","🌶️","🌽","🥕","🧄","🧅","🥔","🍠","🥐","🥯","🍞","🥖","🥨","🧀","🥚","🍳","🧈","🥞","🧇","🥓","🥩","🍗","🍖","🦴","🌭","🍔","🍟","🍕","🥪","🥙","🧆","🌮","🌯","🥗","🥘","🥫","🍝","🍜","🍲","🍛","🍣","🍱","🥟","🦪","🍤","🍙","🍚","🍘","🍥","🥠","🥮","🍢","🍡","🍧","🍨","🍦","🥧","🧁","🍰","🎂","🍮","🍭","🍬","🍫","🍿","🍩","🍪","🌰","🥜","🍯","🥛","🍼","☕","🍵","🧃","🥤","🍶","🍺","🍻","🥂","🍷","🥃","🍸","🍹","🧉","🍾","🧊"],travel:["✈️","🚀","🚁","🚂","🚃","🚄","🚅","🚆","🚇","🚈","🚉","🚊","🚝","🚞","🚋","🚌","🚍","🚎","🚐","🚑","🚒","🚓","🚔","🚕","🚖","🚗","🚘","🚙","🚚","🚛","🚜","🏎️","🏍️","🛵","🦽","🦼","🛺","🚲","🛴","🛹","🚏","🛣️","🛤️","🛢️","⛽","🚨","🚥","🚦","🛑","🚧"],activities:["⚽","🏀","🏈","⚾","🥎","🎾","🏐","🏉","🥏","🎱","🪀","🏓","🏸","🏒","🏑","🥍","🏏","🥅","⛳","🪁","🎣","🤿","🎽","🎿","🛷","🥌","🎯","🪂","🎮","🕹️","🎲","🎭","🎨","🧩"],objects:["💡","🔦","🕯️","🧯","🛒","🚬","⚰️","⚱️","🏺","🔮","📿","🧿","💈","⚗️","🔭","🔬","🕳️","💊","💉","🩸","🩹","🩺","🔪","🗡️","⚔️","🛡️","🚪","🪑","🛏️","🛋️","🪒","🧴","🧷","🧹","🧺","🧻","🧼","🧽","🧯","🛒"],symbols:["❤️","🧡","💛","💚","💙","💜","🖤","🤍","🤎","💔","❣️","💕","💞","💓","💗","💖","💘","💝","💟","☮️","✝️","☪️","🕉️","☸️","✡️","🔯","🕎","☯️","☦️","🛐","⛎","♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓","🆔","⚛️"],flags:["🏁","🚩","🎌","🏴","🏳️","🏳️‍🌈","🏴‍☠️"]};function loadEmojisForCategory(category){emojiContent.innerHTML="";const emojis=emojisByCategory[category];emojis.forEach(emoji=>{const emojiElement=document.createElement("div");emojiElement.className="emoji-item";emojiElement.textContent=emoji;emojiElement.addEventListener("click",()=>{insertEmoji(emoji)});emojiContent.appendChild(emojiElement)})}function insertEmoji(emoji){const cursorPos=textarea.selectionStart;const textBefore=textarea.value.substring(0,cursorPos);const textAfter=textarea.value.substring(cursorPos);textarea.value=textBefore+emoji+textAfter;textarea.selectionStart=cursorPos+emoji.length;textarea.selectionEnd=cursorPos+emoji.length;textarea.focus();sendButton.style.display="block";emojiPanel.classList.remove("active")}loadEmojisForCategory("frequent");emojiCategories.forEach(category=>{category.addEventListener("click",()=>{emojiCategories.forEach(cat=>cat.classList.remove("active"));category.classList.add("active");loadEmojisForCategory(category.dataset.category)})});emojiButton.addEventListener("click",()=>{emojiPanel.classList.toggle("active");if(emojiPanel.classList.contains("active")){loadEmojisForCategory("frequent")}});document.addEventListener("click",event=>{if(!emojiPanel.contains(event.target)&&!emojiButton.contains(event.target)){emojiPanel.classList.remove("active")}});async function sendMessage(message){const messagesContainer=chatContainer.querySelector(".chat-messages");const messageData={message:message,chatInput:message,sessionId:currentSessionId,timestamp:(new Date).toISOString()};const userMessageDiv=document.createElement("div");userMessageDiv.className="chat-message user";userMessageDiv.innerHTML=`
             <span>${message}</span>
             <div style="font-size: 12px; color: rgba(255, 255, 255, 0.8); text-align: right; margin-top: 4px;">
